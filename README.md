@@ -45,7 +45,8 @@ This API can be called several times per user and level and does not return anyt
 requests with valid session keys shall be processed.
 
 #### Request
-`POST {levelId}?score={score}&sessionKey={sessionKey}`
+`POST {levelId}/score?sessionKey={sessionKey}`
+`Body : <score>`
 
 #### Response
     Status: 200 OK

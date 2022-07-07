@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,10 +39,10 @@ public class GameController {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "User's score saved to a level successfully", response = String.class)
     })
-    @PostMapping(value = "{levelId}")
+    @PostMapping(value = "{levelId}/score")
     public ResponseEntity saveScore(
         @NotNull(message = "'levelId' is required") @PathVariable Integer levelId,
-        @NotNull(message = "'score' is required") @Valid SaveScoreRequest saveScoreRequest,
+        @NotNull(message = "'score' is required") @RequestBody @Valid SaveScoreRequest saveScoreRequest,
         @NotNull(message = "'sessionKey' is required") @RequestParam(value = "sessionKey") String sessionKey
     ) {
         Boolean validRequest = gameService.saveScore(sessionKey, saveScoreRequest.getScore(), levelId);

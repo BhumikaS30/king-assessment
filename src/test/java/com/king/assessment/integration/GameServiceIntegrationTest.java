@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.nullValue;
 
 @SpringBootTest(classes = KingAssessmentApplication.class,
                 webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GameServiceControllerTest {
+public class GameServiceIntegrationTest {
 
     @LocalServerPort
     private int port;
@@ -45,7 +45,7 @@ public class GameServiceControllerTest {
 
         SaveScoreRequest saveScoreRequest = new SaveScoreRequest();
         saveScoreRequest.setScore(100);
-        assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/123?score=987&sessionKey=8ef20062-714d-4f4e-9384-e0d443abcf23",
+        assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/123/score?sessionKey=8ef20062-714d-4f4e-9384-e0d443abcf23",
                                                    saveScoreRequest,
                                                    ResponseEntity.class), nullValue());
     }

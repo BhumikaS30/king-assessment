@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import static com.king.assessment.utils.FileUtils.loadTextFileFromResources;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -83,10 +84,10 @@ public class GameServiceControllerTest {
         when(gameService.saveScore(anyString(), anyInt(), anyInt())).thenReturn(true);
 
         mockMvc.perform(MockMvcRequestBuilders
-                            .post("/123")
-                            .queryParam("score", "987")
+                            .post("/123/score")
                             .queryParam("sessionKey", DEFAULT_SESSION_TOKEN_KEY)
                             .contentType(MediaType.APPLICATION_JSON_VALUE)
+                            .content(getSaveScoreRequestJson())
                             .accept(MediaType.APPLICATION_JSON_VALUE))
                .andExpect(status().isOk())
                .andReturn();
@@ -98,7 +99,7 @@ public class GameServiceControllerTest {
         when(gameService.saveScore(anyString(), anyInt(), anyInt())).thenReturn(true);
 
         mockMvc.perform(MockMvcRequestBuilders
-                            .post("/"+null)
+                            .post("/" + null + "/score")
                             .queryParam("sessionKey", DEFAULT_SESSION_TOKEN_KEY)
                             .contentType(MediaType.APPLICATION_JSON_VALUE)
                             .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -107,17 +108,21 @@ public class GameServiceControllerTest {
     }
 
     @Test
-    public void saveScore_validSalesforceCustomerId_returnsUnAuthorizedResponseStatus() throws Exception {
+    public void saveScore_inValidRequest_returnsUnAuthorizedResponseStatus() throws Exception {
 
         when(gameService.saveScore(anyString(), anyInt(), anyInt())).thenReturn(false);
 
         mockMvc.perform(MockMvcRequestBuilders
-                            .post("/123")
-                            .queryParam("score", "987")
+                            .post("/123/score")
                             .queryParam("sessionKey", DEFAULT_SESSION_TOKEN_KEY)
+                            .content(getSaveScoreRequestJson())
                             .contentType(MediaType.APPLICATION_JSON_VALUE)
                             .accept(MediaType.APPLICATION_JSON_VALUE))
                .andExpect(status().isUnauthorized())
                .andReturn();
+    }
+
+    public static String getSaveScoreRequestJson() {
+        return loadTextFileFromResources("test-data/save-score-request.json");
     }
 }
