@@ -83,7 +83,6 @@ public class GameService {
                 level = new Level();
                 level.setLevelId(levelId1);
                 level.setScore(score);
-               // level.setUserId(user.getId());
                 level.setUser(user);
                 levels.add(level);
             }
