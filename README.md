@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 # king-assessment
 This is a Game System
-=======
-# Assessment for King 
 
 ## Description
 The application an HTTP-based mini-game back-end in Java which registers game scores for different users and levels, with the capability to return high score lists per level. There shall also be a simple login system
@@ -74,4 +71,3 @@ level without any scores submitted shall be an empty string.
 
 #### Test methods Naming Convention
 `<methodUnderTest>_<concreteScenarioExercisedByTheTest>_<expectedOutcome>`
->>>>>>> 08d27cf (Created assessmentfor king)
