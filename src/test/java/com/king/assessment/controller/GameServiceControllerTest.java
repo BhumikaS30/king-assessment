@@ -78,7 +78,7 @@ public class GameServiceControllerTest {
     }
 
     @Test
-    public void saveScore_authorizedUser_savedSuccessfully() throws Exception {
+    public void saveScore_authorizedUserAndValidRequest_savedSuccessfully() throws Exception {
 
         when(gameService.saveScore(anyString(), anyInt(), anyInt())).thenReturn(true);
 
@@ -89,6 +89,20 @@ public class GameServiceControllerTest {
                             .contentType(MediaType.APPLICATION_JSON_VALUE)
                             .accept(MediaType.APPLICATION_JSON_VALUE))
                .andExpect(status().isOk())
+               .andReturn();
+    }
+
+    @Test
+    public void saveScore_authorizedUserAndInValidRequest_savedSuccessfully() throws Exception {
+
+        when(gameService.saveScore(anyString(), anyInt(), anyInt())).thenReturn(true);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                            .post("/"+null)
+                            .queryParam("sessionKey", DEFAULT_SESSION_TOKEN_KEY)
+                            .contentType(MediaType.APPLICATION_JSON_VALUE)
+                            .accept(MediaType.APPLICATION_JSON_VALUE))
+               .andExpect(status().isBadRequest())
                .andReturn();
     }
 

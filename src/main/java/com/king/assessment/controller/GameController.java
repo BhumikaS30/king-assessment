@@ -1,5 +1,9 @@
 package com.king.assessment.controller;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import com.king.assessment.model.SaveScoreRequest;
 import com.king.assessment.service.GameService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +30,7 @@ public class GameController {
         @ApiResponse(code = 200, message = "Session Token returned successfully", response = String.class)
     })
     @GetMapping(value = "{userId}/login")
-    public ResponseEntity<String> login(@PathVariable Integer userId) {
+    public ResponseEntity<String> login( @NotNull(message = "'userId' is required") @PathVariable Integer userId) {
         return ResponseEntity.ok().body(gameService.login(userId));
     }
 
@@ -36,11 +40,11 @@ public class GameController {
     })
     @PostMapping(value = "{levelId}")
     public ResponseEntity saveScore(
-        @PathVariable Integer levelId,
-        @RequestParam(value = "score", defaultValue = "0") Integer score,
-        @RequestParam("sessionKey") String sessionKey
+        @NotNull(message = "'levelId' is required") @PathVariable Integer levelId,
+        @NotNull(message = "'score' is required") @Valid SaveScoreRequest saveScoreRequest,
+        @NotNull(message = "'sessionKey' is required") @RequestParam(value = "sessionKey") String sessionKey
     ) {
-        Boolean validRequest = gameService.saveScore(sessionKey, score, levelId);
+        Boolean validRequest = gameService.saveScore(sessionKey, saveScoreRequest.getScore(), levelId);
         if (validRequest) {
             return ResponseEntity.ok().build();
         }
@@ -52,7 +56,7 @@ public class GameController {
         @ApiResponse(code = 200, message = "High score list returned successfully", response = String.class)
     })
     @GetMapping(value = "/{levelId}/highscorelist")
-    public String getHighScoreList(@PathVariable Integer levelId) {
+    public String getHighScoreList(@NotNull(message = "'levelId' is required")@PathVariable Integer levelId) {
         return gameService.getHighScoreList(levelId);
     }
 }
