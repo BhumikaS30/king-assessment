@@ -8,11 +8,14 @@
 		<version>2.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<groupId>com.king.assessment</groupId>
+	<artifactId>king-assessment</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>king-assessment</name>
+	<description>A HTTP-based mini-game back-end in Java which registers game scores for different users and
+		levels, with the capability to return high score lists per level. There shall also be a simple login system
+		in place.
+	</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -49,7 +52,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi</artifactId>
-			<version>1.6.8</version>
+			<version>1.6.9</version>
 			<type>pom</type>
 		</dependency>
 	</dependencies>
